@@ -1,12 +1,13 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.generics import RetrieveAPIView
 
 from apps.orders.api_endpoint.orders.OrderUpdateDestroy.serializer import OrderUpdateSerializer
 from apps.orders.models import Order
 
 
 @api_view(['PATCH', 'DELETE'])
-def order_update_destroy_view(request, pk):
+def order_update_destroy(request, pk):
     try:
         order = Order.objects.get(pk=pk)
     except Order.DoesNotExist:

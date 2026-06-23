@@ -1,12 +1,16 @@
 from django.db import models
-from apps.common.models import BaseModel
+from django.contrib.auth.models import AbstractUser, PermissionsMixin
+
+from apps.users.managers import UserManager
 
 
-class User(BaseModel):
-    username = models.CharField(max_length=50, unique=True)
-    email = models.EmailField(unique=True)
+class User(AbstractUser, PermissionsMixin):
     phone_number = models.CharField(max_length=20, unique=True)
-    password = models.CharField(max_length=128)
+    date_of_birth = models.DateField(null=True, blank=True)
+    gender = models.CharField(max_length=10, null=True, blank=True)
+    objects = UserManager()
+
+    USERNAME_FIELD = "phone_number"
 
     def __str__(self):
-        return self.username
+        return self.phone_number
